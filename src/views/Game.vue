@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="game.id">
     <div class="opponent">
         <div class="opponent-hand">
             <div
@@ -38,7 +38,13 @@ export default {
   name: "Game",
   computed: {
     game() {
-      return this.$store.state.aGame;
+      return this.$store.state.game;
+    }
+  },
+  mounted() {
+    console.log(this.$route.params);
+    if(!this.game.id){
+    this.$store.dispatch("getGame", this.$route.params.gameId);
     }
   }
 };
@@ -75,7 +81,7 @@ export default {
   margin: 0 5px;
   border: 2px solid black;
   border-radius: 5%;
-  background-color: rgb(207, 205, 205);
+  background-color: rgb(250, 154, 154);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.623);
 }
 .visible:hover {
@@ -110,9 +116,8 @@ export default {
   max-height: 30vh;
   position: absolute;
   bottom: 0vh;
-  margin: 0 auto;
   width: 100vw;
-  max-width: 99%;
+  max-width: 99.5%;
 }
 .hero-card {
   height: 27.5vh;
@@ -120,19 +125,19 @@ export default {
   margin: 0 5px;
   border: 2px solid black;
   border-radius: 5%;
-  background-color: rgb(207, 205, 205);
+  background-color: rgb(180, 211, 170);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.623);
 }
 .hero-card:hover {
-    position: relative;
-    animation: slideUp .5s forwards, grow .5s forwards;
+  position: relative;
+  animation: slideUp 0.5s forwards, grow 0.5s forwards;
 }
 @keyframes slideUp {
-    from {
-        bottom: 0vh;
-    }
-    to {
-        bottom: 7vh;
-    }
+  from {
+    bottom: 0vh;
+  }
+  to {
+    bottom: 7vh;
+  }
 }
 </style>
