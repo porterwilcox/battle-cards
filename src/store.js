@@ -12,13 +12,21 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    game: {}
+    game: {},
+    hero: {},
+    opponent: {}
   },
   mutations: {
     setGame(state, game) {
       state.game = game
       router.push({ name: 'game', params: { gameId: game.id } })
       console.log(state.game)
+    },
+    setHero(state, card){
+      state.hero = card
+    },
+    setOpponent(state, card){
+      state.opponent = card
     }
   },
   actions: {
@@ -43,10 +51,21 @@ export default new Vuex.Store({
     },
     getGame({ dispatch, commit }, gameId) {
       gameApi.get(`/${gameId}`)
-        .then(res => {
-          console.log(res)
-          commit('setGame', res.data.data)
-    })
+        .then(res => commit('setGame', res.data.data))
+    },
+    setHero({dispatch, commit}, card){
+      commit('setHero', card)
+    },
+    setOpponent({dispatch, commit}, card){
+      commit('setOpponent', card)
+    },
+    fight({dispatch, commit}, payload){
+      gameApi.put(`/${payload.gameId}`, payload)
+        .then(res => console.log(res))
+    },
+    quit({dispatch, commit}, gameId){
+      gameApi.delete(`/${gameId}`)
+      .then(res => router.push({ name: 'battleCards'}))
+    }
   }
-}
 })
