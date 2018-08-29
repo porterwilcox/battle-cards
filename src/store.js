@@ -11,11 +11,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    aGame:{}
+    aGame: {}
   },
   mutations: {
     setGame(state, game){
       state.aGame = game
+      console.log(game)
     }
   },
   actions: {
@@ -26,7 +27,7 @@ export default new Vuex.Store({
         gameObj = {"playerName": "robots", "set": 1}
         break
         case 2:
-        gameObj = {"playerName": "spinner hat heads", "set": 2}
+        gameObj = {"playerName": "knuckle heads", "set": 2}
         break
         case 3:
         gameObj = {"playerName": "robot heads", "set": 3}
