@@ -39,7 +39,6 @@
             @click="setHero(card)"
             :key="card.id"
             ><img
-            v-if="!game.players[0].remainingCards == 0"
             :src="card.img"
             class="hero-card"
             >{{card.health}}</div>
@@ -58,7 +57,6 @@ export default {
   },
   computed: {
     game() {
-      debugger
       return this.$store.state.game;
     },
     hero() {

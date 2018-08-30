@@ -1,5 +1,5 @@
 <template>
-    <div class="opponent" v-if="opponent.id">
+    <div class="opponent" v-if="opponent.health">
         <h1>this json is the opponent</h1>
         {{opponent}}
     </div>
@@ -7,15 +7,14 @@
 
 <script>
 export default {
-    name: 'Opponent',
-    computed: {
-        opponent(){
-            return this.$store.state.opponent
-        }
+  name: "Opponent",
+  computed: {
+      opponent(){
+          return this.$store.state.opponent;
+      }
     }
-}
+  };
 </script>
 
 <style>
-
 </style>
