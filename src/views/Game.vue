@@ -15,7 +15,7 @@
             v-else-if="card.visible"
             :src="card.img"
             class="visible"
-            ></div>
+            >{{card.health}}</div>
         </div>
         <h1>{{game.players[1].name}}</h1>
     </div>
@@ -42,7 +42,7 @@
             v-if="!game.players[0].remainingCards == 0"
             :src="card.img"
             class="hero-card"
-            ></div>
+            >{{card.health}}</div>
         </div>
     </div>
 </div>
@@ -53,8 +53,12 @@ import Hero from "@/components/Hero";
 import Opponent from "@/components/Opponent";
 export default {
   name: "Game",
+  data(){
+    return {}
+  },
   computed: {
     game() {
+      debugger
       return this.$store.state.game;
     },
     hero() {

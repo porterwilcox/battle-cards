@@ -22,10 +22,10 @@ export default new Vuex.Store({
       router.push({ name: 'game', params: { gameId: game.id } })
       console.log(state.game)
     },
-    setHero(state, card){
+    setHero(state, card) {
       state.hero = card
     },
-    setOpponent(state, card){
+    setOpponent(state, card) {
       state.opponent = card
     }
   },
@@ -53,19 +53,24 @@ export default new Vuex.Store({
       gameApi.get(`/${gameId}`)
         .then(res => commit('setGame', res.data.data))
     },
-    setHero({dispatch, commit}, card){
+    setHero({ dispatch, commit }, card) {
       commit('setHero', card)
     },
-    setOpponent({dispatch, commit}, card){
+    setOpponent({ dispatch, commit }, card) {
       commit('setOpponent', card)
     },
-    fight({dispatch, commit}, payload){
+    fight({ dispatch, commit }, payload) {
       gameApi.put(`/${payload.gameId}`, payload)
-        .then(res => console.log(res))
+        .then(res => {
+          gameApi.get(`/${payload.gameId}`)
+            .then(res => commit('setGame', res.data.data))
+        })
     },
-    quit({dispatch, commit}, gameId){
+    quit({ dispatch, commit }, gameId) {
       gameApi.delete(`/${gameId}`)
-      .then(res => router.push({ name: 'battleCards'}))
+        .then(res => router.push({ name: 'battleCards' }))
+        commit('setHero', {})
+        commit('setOpponent', {})
     }
   }
 })
