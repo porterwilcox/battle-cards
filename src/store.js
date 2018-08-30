@@ -60,6 +60,8 @@ export default new Vuex.Store({
       commit('setOpponent', card)
     },
     fight({ dispatch, commit }, payload) {
+      commit('setHero', {})
+      commit('setOpponent', {})
       gameApi.put(`/${payload.gameId}`, payload)
         .then(res => {
           gameApi.get(`/${payload.gameId}`)
@@ -69,8 +71,8 @@ export default new Vuex.Store({
     quit({ dispatch, commit }, gameId) {
       gameApi.delete(`/${gameId}`)
         .then(res => router.push({ name: 'battleCards' }))
-        commit('setHero', {})
-        commit('setOpponent', {})
+      commit('setHero', {})
+      commit('setOpponent', {})
     }
   }
 })
