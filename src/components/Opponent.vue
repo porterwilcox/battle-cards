@@ -35,6 +35,7 @@ export default {
   position: absolute;
   right: 1rem;
   top: 30vh;
+  color: black;
 }
 .hidden {
   height: 50vh;
@@ -47,7 +48,7 @@ export default {
   border: 2px solid black;
   border-radius: 5%;
   background-color: rgb(250, 154, 154);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.623);
+  box-shadow: 0 3px 10px #6f2232;
   z-index: 2;
   display: flex;
   justify-content: center;

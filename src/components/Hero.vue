@@ -12,28 +12,13 @@
 
 <script>
 export default {
-    name: 'Hero',
-    data(){
-      return {
-        options: {
-  dropzoneSelector: 'ul',
-  draggableSelector: 'li',
-  excludeOlderBrowsers: true,
-  multipleDropzonesItemsDraggingEnabled: true,
-  showDropzoneAreas: true,
-  onDrop: function(event) {console.log(event)},
-  onDragstart: function(event) {console.log(event)},
-  onDragend: function(event) {console.log(event)}
-}
-      }
-    },
-    computed: {
-        hero(){
-          console.log('retreiving the hero')
-            return this.$store.state.hero
-        }
+  name: "Hero",
+  computed: {
+    hero() {
+      return this.$store.state.hero;
     }
-}
+  }
+};
 </script>
 
 <style scoped>
@@ -45,9 +30,10 @@ export default {
   left: 1rem;
   border: 2px solid black;
   border-radius: 5%;
+  box-shadow: 0 3px 10px #6f2232;
   background-color: rgb(180, 211, 170);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.623);
   display: flex;
+  color: black;
   justify-content: center;
 }
 .hero img {
@@ -59,14 +45,14 @@ export default {
 .defense {
   position: absolute;
   left: 1.2rem;
-  top: .5rem;
+  top: 0.5rem;
   z-index: 2;
   font-size: 5rem;
 }
 .shield {
   position: absolute;
   left: 0rem;
-  top: .5rem;
+  top: 0.5rem;
   color: gold;
   font-size: 5rem;
   z-index: 1;
@@ -74,7 +60,7 @@ export default {
 .attack {
   position: absolute;
   right: 3.5rem;
-  top: .5rem;
+  top: 0.5rem;
   z-index: 2;
   font-size: 5rem;
 }
@@ -87,7 +73,7 @@ export default {
 }
 .health {
   position: absolute;
-  bottom: .3rem;
+  bottom: 0.3rem;
   z-index: 2;
   color: white;
   font-size: 3rem;

@@ -1,63 +1,70 @@
 <template>
-<div v-if="game.id">
+<div v-if="game.id" class="game">
+<div v-if='!game.players[0].hand.length || game.winner'>{{gameEnd}}</div>
+  <h2 class="enemy-count">enemies remaining: {{game.players[1].remainingCards + game.players[1].hand.length}}</h2>
   <button @click="quit(game.id)">quit</button>
-    <div class="opponent">
-        <div class="opponent-hand">
-            <div
-            v-for="card in game.players[1].hand"
-            @click="setOpponent(card)"
-            :key="card.id"
-            ><img 
-            v-if="!card.visible"
-            src="@/assets/monster-hunt-card-back.png"
-            class="hidden"
-            >
-            <div class="opp-card"
-            v-else-if="card.visible"
-            ><img
-            :src="card.img"
-            ><span class="defense">{{card.defense}}</span>
-            <i class="fas fa-shield-alt shield"></i>
-            <span class="attack">{{card.attack}}</span>
-            <span class="health">{{card.health}}</span>
-            <span class="swords">&#9876;</span>
-            <i class="fas fa-heart heart"></i>
-            </div>
-        </div>
+  <div class="opponent">
+      <div class="opponent-hand">
+          <div
+          v-for="card in game.players[1].hand"
+          @click="setOpponent(card)"
+          :key="card.id"
+          ><img 
+          v-if="!card.visible"
+          src="@/assets/monster-hunt-card-back.png"
+          class="hidden"
+          >
+          <div class="opp-card"
+          v-else-if="card.visible"
+          ><img
+          :src="card.img"
+          ><span class="defense">{{card.defense}}</span>
+          <i class="fas fa-shield-alt shield"></i>
+          <span class="attack">{{card.attack}}</span>
+          <span class="health">{{card.health}}</span>
+          <span class="swords">&#9876;</span>
+          <i class="fas fa-heart heart"></i>
+          </div>
       </div>
-        <h1>{{game.players[1].name}}</h1>
     </div>
-    <opponent id="the-opp"/>
-    <button class="fight"
-    @click='fight({
-        "playerId": game.players[0].id,
-        "opponentId": game.players[1].id,
-        "playerCardId": hero.id,
-        "opponentCardId": opponent.id,
-        gameId: game.id,
-      })' 
-    v-if="hero && opponent"
-    >Fight!</button>
-    <hero id="the-hero" />
-    <div class="hero">
-        <h1>{{game.players[0].name}}</h1>
-        <div class="hero-hand">
-            <div
-            class="hero-card"
-            v-for="card in game.players[0].hand"
-            @click="setHero(card)"
-            :key="card.id"
-            ><span class="defense">{{card.defense}}</span>
-            <i class="fas fa-shield-alt shield"></i>
-            <span class="attack">{{card.attack}}</span>
-            <span class="health">{{card.health}}</span>
-            <span class="swords">&#9876;</span>
-            <i class="fas fa-heart heart"></i>
-            <img
-            :src="card.img"
-            ></div>
-        </div>
-    </div>
+    <h1>{{game.players[1].name}}</h1>
+    <h2 v-if="opponent">{{opponent.name}}</h2>
+  </div>
+  <opponent id="the-opp"/>
+  <button class="fight"
+  @click='fight({
+      "playerId": game.players[0].id,
+      "opponentId": game.players[1].id,
+      "playerCardId": hero.id,
+      "opponentCardId": opponent.id,
+      gameId: game.id,
+    })' 
+  v-if="hero && opponent"
+  >
+  <img alt="Vue logo" src="../assets/logo.png">
+  </button>
+  <hero id="the-hero" />
+  <h2 class="hero-count">heroes remaining: {{game.players[0].remainingCards + game.players[0].hand.length}}</h2>
+  <div class="hero">
+      <h2 v-if="hero">{{hero.name}}</h2>
+      <h1>{{game.players[0].name}}</h1>
+      <div class="hero-hand">
+          <div
+          class="hero-card"
+          v-for="card in game.players[0].hand"
+          @click="setHero(card)"
+          :key="card.id"
+          ><span class="defense">{{card.defense}}</span>
+          <i class="fas fa-shield-alt shield"></i>
+          <span class="attack">{{card.attack}}</span>
+          <span class="health">{{card.health}}</span>
+          <span class="swords">&#9876;</span>
+          <i class="fas fa-heart heart"></i>
+          <img
+          :src="card.img"
+          ></div>
+      </div>
+  </div>
 </div>
 </template>
 
@@ -75,6 +82,9 @@ export default {
     },
     opponent() {
       return this.$store.state.opponent;
+    },
+    gameEnd() {
+        this.$router.push({ name: "battleCards" });
     }
   },
   mounted() {
@@ -90,15 +100,20 @@ export default {
       this.$store.dispatch("setOpponent", card);
     },
     fight(payload) {
-      document.getElementById('the-hero').classList.add('hero-rush')
-      document.getElementById('the-opp').classList.add('opp-rush')
-      let putFight = setTimeout(() => this.$store.dispatch("fight", payload), 1000)
-      let wait = setTimeout(() => {document.getElementById('the-hero').classList.remove('hero-rush')}, 1000)    
-      let waitAgain = setTimeout(() => {document.getElementById('the-opp').classList.remove('opp-rush')}, 1000)    
+      document.getElementById("the-hero").classList.add("hero-rush");
+      document.getElementById("the-opp").classList.add("opp-rush");
+      let putFight = setTimeout(
+        () => this.$store.dispatch("fight", payload),
+        1000
+      );
+      let wait = setTimeout(() => {
+        document.getElementById("the-hero").classList.remove("hero-rush");
+      }, 1000);
+      let waitAgain = setTimeout(() => {
+        document.getElementById("the-opp").classList.remove("opp-rush");
+      }, 1000);
     },
-    putFight(payload){
-      
-    },
+    putFight(payload) {},
     quit(gameId) {
       this.$store.dispatch("quit", gameId);
     }
@@ -111,8 +126,18 @@ export default {
 </script>
 
 <style scoped>
+.game {
+  background-color: #1a1a1d;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  color: #c3073f;
+  text-shadow: 0 0 2px #4e4e50;
+}
 div button {
   position: absolute;
+  right: 0vw;
+  cursor: pointer;
 }
 
 .opponent-hand {
@@ -121,12 +146,14 @@ div button {
   justify-content: center;
   align-items: flex-start;
   max-height: 30vh;
+  color: black;
 }
 .hidden {
   margin: 0 -3px;
   height: 30vh;
   width: 20vh;
   z-index: 1;
+  cursor: pointer;
 }
 .hidden:hover {
   position: relative;
@@ -147,12 +174,13 @@ div button {
   border: 2px solid black;
   border-radius: 5%;
   background-color: rgb(250, 154, 154);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.623);
+  box-shadow: 0 2px 10px #6f2232;
   z-index: 1;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   position: relative;
+  cursor: pointer;
 }
 .opp-card:hover {
   position: relative;
@@ -227,19 +255,67 @@ div button {
   text-align: center;
   width: 100vw;
   max-width: 99%;
+  top: 25vh;
+}
+.opponent h2 {
+  position: fixed;
+  right: 2.5vw;
+  top: 20vh;
+}
+.enemy-count {
+  position: absolute;
+  left: 3vw;
+  color: #950740;
 }
 .fight {
   position: absolute;
-  top: 48vh;
+  top: 43vh;
   width: 10vw;
   margin: 0 45vw;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+.fight img {
+  height: 14vh;
+  width: auto;
+  box-shadow: 0 0 30px 10px #c3073f;
+  padding: 6% 2% 0;
+  border-radius: 50%;
+}
+.fight:hover img {
+  animation: glow 2.75s infinite;
+}
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 30px 10px #c3073f;
+  }
+  50% {
+    box-shadow: 0 0 50px 25px #c3073f;
+  }
+  100% {
+    box-shadow: 0 0 30px 10px #c3073f;
+  }
+}
+.hero-count {
+  position: absolute;
+  left: 3vw;
+  bottom: 0vh;
+  color: #950740;
 }
 .hero h1 {
   position: absolute;
   text-align: center;
   width: 100vw;
   max-width: 99%;
-  bottom: 30vh;
+  bottom: 25vh;
+}
+.hero h2 {
+  position: absolute;
+  left: 2vw;
+  top: 20vh;
 }
 .hero-hand {
   display: flex;
@@ -252,6 +328,7 @@ div button {
   width: 100vw;
   max-width: 99%;
   z-index: 1;
+  color: black;
 }
 .hero-card {
   height: 27.5vh;
@@ -260,10 +337,11 @@ div button {
   border: 2px solid black;
   border-radius: 5%;
   background-color: rgb(180, 211, 170);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.623);
+  box-shadow: 0 3px 10px #6f2232;
   display: flex;
   justify-content: center;
   position: relative;
+  cursor: pointer;
 }
 .hero-card:hover {
   position: relative;
@@ -307,7 +385,7 @@ div button {
   from {
     left: 1rem;
   }
- 50% {
+  50% {
     left: 50vw;
   }
 }

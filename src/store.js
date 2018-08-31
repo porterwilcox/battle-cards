@@ -22,8 +22,10 @@ export default new Vuex.Store({
       router.push({ name: 'game', params: { gameId: game.id } })
       console.log(state.game)
     },
+    resetGame(state, game){
+      state.game = game
+    },
     setHero(state, card) {
-      console.log('setting the hero')
       state.hero = card
     },
     setOpponent(state, card) {
@@ -83,6 +85,7 @@ export default new Vuex.Store({
         .then(res => router.push({ name: 'battleCards' }))
       commit('setHero', undefined)
       commit('setOpponent', undefined)
+      commit('resetGame', {})
     }
   }
 })
