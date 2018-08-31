@@ -4,8 +4,14 @@
             <h1>nice you won</h1>
             <button @click="playAgain(game.id)">replay</button>
         </div>
-        <div v-else>
+        <div v-else-if="game.winner.id">
             <h1>you have fallen</h1>
+            <button @click="playAgain(game.id)">replay</button>
+        </div>
+        <div v-else>
+            <h1>you stood your ground well, <br>
+            but so did your opponent...<br>
+            TIE!</h1>
             <button @click="playAgain(game.id)">replay</button>
         </div>
     </div>

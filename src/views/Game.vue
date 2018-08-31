@@ -1,6 +1,6 @@
 <template>
 <div v-if="game.id" class="game">
-<div v-if='!game.players[0].hand.length || game.winner'>{{gameEnd}}</div>
+<div v-if='game.winner'>{{gameEnd}}</div>
   <h2 class="enemy-count">enemies remaining: {{game.players[1].remainingCards + game.players[1].hand.length}}</h2>
   <button @click="quit(game.id)">quit</button>
   <div class="opponent">
@@ -255,7 +255,7 @@ div button {
   text-align: center;
   width: 100vw;
   max-width: 99%;
-  top: 25vh;
+  top: 26vh;
 }
 .opponent h2 {
   position: fixed;
