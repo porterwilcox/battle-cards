@@ -62,8 +62,11 @@ export default new Vuex.Store({
     setOpponent({ dispatch, commit }, card) {
       commit('setOpponent', card)
     },
+    //fight function is seriously overworked,
+    //i didn't understand dispatch within the store when i wrote it
+    //i know how to write it better now but i'm not changing for time's sake
+    //future projects will reflect my better understanding
     fight({ dispatch, commit }, payload) {
-
       gameApi.put(`/${payload.gameId}`, payload)
         .then(res => {
           gameApi.get(`/${payload.gameId}`)
