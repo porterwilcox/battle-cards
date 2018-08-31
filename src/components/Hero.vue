@@ -1,20 +1,35 @@
 <template>
-    <div class="hero" v-if="hero.id">
-        <span class="defense">{{hero.defense}}</span>
-        <i class="fas fa-shield-alt shield"></i>
-        <span class="attack">{{hero.attack}}</span>
-        <span class="health">{{hero.health}}</span>
-        <span class="swords">&#9876;</span>
-        <i class="fas fa-heart heart"></i>
-        <img :src="hero.img" />
-    </div>
+      <div class="hero" v-if="hero">
+        <span class="defense opac">{{hero.defense}}</span>
+        <i class="fas fa-shield-alt shield opac"></i>
+        <span class="attack opac">{{hero.attack}}</span>
+        <span class="health opac">{{hero.health}}</span>
+        <span class="swords opac">&#9876;</span>
+        <i class="fas fa-heart heart opac"></i>
+        <img :src="hero.img" /> 
+      </div>
 </template>
 
 <script>
 export default {
     name: 'Hero',
+    data(){
+      return {
+        options: {
+  dropzoneSelector: 'ul',
+  draggableSelector: 'li',
+  excludeOlderBrowsers: true,
+  multipleDropzonesItemsDraggingEnabled: true,
+  showDropzoneAreas: true,
+  onDrop: function(event) {console.log(event)},
+  onDragstart: function(event) {console.log(event)},
+  onDragend: function(event) {console.log(event)}
+}
+      }
+    },
     computed: {
         hero(){
+          console.log('retreiving the hero')
             return this.$store.state.hero
         }
     }
@@ -23,24 +38,19 @@ export default {
 
 <style scoped>
 .hero {
-  position: absolute;
-  left: 1rem;
-  top: 30vh;
-}
-.hero {
   height: 50vh;
   width: 33vh;
+  position: absolute;
+  top: 30vh;
+  left: 1rem;
   border: 2px solid black;
   border-radius: 5%;
-  background-color: rgb(250, 154, 154);
+  background-color: rgb(180, 211, 170);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.623);
-  z-index: 2;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  position: relative;
 }
-.hero-card img {
+.hero img {
   height: 95%;
   width: 95%;
   bottom: 1%;
@@ -48,15 +58,15 @@ export default {
 }
 .defense {
   position: absolute;
-  left: 3rem;
-  top: 1rem;
+  left: 1.2rem;
+  top: .5rem;
   z-index: 2;
   font-size: 5rem;
 }
 .shield {
   position: absolute;
-  left: 1.8rem;
-  top: 1rem;
+  left: 0rem;
+  top: .5rem;
   color: gold;
   font-size: 5rem;
   z-index: 1;
@@ -64,29 +74,29 @@ export default {
 .attack {
   position: absolute;
   right: 3.5rem;
-  top: 1rem;
+  top: .5rem;
   z-index: 2;
   font-size: 5rem;
 }
 .swords {
   position: absolute;
   right: 0rem;
-  top: 0.5rem;
+  top: 0rem;
   z-index: 1;
   font-size: 5rem;
 }
 .health {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: .3rem;
   z-index: 2;
   color: white;
-  font-size: 4rem;
+  font-size: 3rem;
 }
 .heart {
   position: absolute;
-  bottom: 0.8rem;
+  bottom: 0rem;
   z-index: 1;
   color: darkred;
-  font-size: 6rem;
+  font-size: 4rem;
 }
 </style>

@@ -13,8 +13,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     game: {},
-    hero: {},
-    opponent: {}
+    hero: undefined,
+    opponent: undefined
   },
   mutations: {
     setGame(state, game) {
@@ -23,6 +23,7 @@ export default new Vuex.Store({
       console.log(state.game)
     },
     setHero(state, card) {
+      console.log('setting the hero')
       state.hero = card
     },
     setOpponent(state, card) {
@@ -60,19 +61,28 @@ export default new Vuex.Store({
       commit('setOpponent', card)
     },
     fight({ dispatch, commit }, payload) {
-      commit('setHero', {})
-      commit('setOpponent', {})
+
       gameApi.put(`/${payload.gameId}`, payload)
         .then(res => {
           gameApi.get(`/${payload.gameId}`)
-            .then(res => commit('setGame', res.data.data))
+            .then(res => {
+              commit('setGame', res.data.data)
+              let hero = res.data.data.players[0].hand.find(h => {
+                return h.id == payload.playerCardId
+              })
+              let opp = res.data.data.players[1].hand.find(o => {
+                return o.id == payload.opponentCardId
+              })
+              commit('setHero', hero)
+              commit('setOpponent', opp)
+            })
         })
     },
     quit({ dispatch, commit }, gameId) {
       gameApi.delete(`/${gameId}`)
         .then(res => router.push({ name: 'battleCards' }))
-      commit('setHero', {})
-      commit('setOpponent', {})
+      commit('setHero', undefined)
+      commit('setOpponent', undefined)
     }
   }
 })

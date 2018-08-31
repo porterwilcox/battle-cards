@@ -1,5 +1,5 @@
 <template>
- <div class="opponent" v-if="opponent.id">
+ <div class="opponent" v-if="opponent">
     <img 
     v-if="!opponent.visible"
     src="@/assets/monster-hunt-card-back.png"
@@ -37,7 +37,6 @@ export default {
   top: 30vh;
 }
 .hidden {
-  margin: 0 -3px;
   height: 50vh;
   width: 33vh;
   z-index: 1;
@@ -60,18 +59,17 @@ export default {
   width: 95%;
   bottom: 1%;
   position: absolute;
-}
-.defense {
+}.defense {
   position: absolute;
-  left: 3rem;
-  top: 1rem;
+  left: 1.2rem;
+  top: .5rem;
   z-index: 2;
   font-size: 5rem;
 }
 .shield {
   position: absolute;
-  left: 1.8rem;
-  top: 1rem;
+  left: 0rem;
+  top: .5rem;
   color: gold;
   font-size: 5rem;
   z-index: 1;
@@ -79,29 +77,29 @@ export default {
 .attack {
   position: absolute;
   right: 3.5rem;
-  top: 1rem;
+  top: .5rem;
   z-index: 2;
   font-size: 5rem;
 }
 .swords {
   position: absolute;
   right: 0rem;
-  top: 0.5rem;
+  top: 0rem;
   z-index: 1;
   font-size: 5rem;
 }
 .health {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: .3rem;
   z-index: 2;
   color: white;
-  font-size: 4rem;
+  font-size: 3rem;
 }
 .heart {
   position: absolute;
-  bottom: 0.8rem;
+  bottom: 0rem;
   z-index: 1;
   color: darkred;
-  font-size: 6rem;
+  font-size: 4rem;
 }
 </style>

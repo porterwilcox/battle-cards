@@ -27,8 +27,8 @@
       </div>
         <h1>{{game.players[1].name}}</h1>
     </div>
-    <opponent />
-    <button 
+    <opponent id="the-opp"/>
+    <button class="fight"
     @click='fight({
         "playerId": game.players[0].id,
         "opponentId": game.players[1].id,
@@ -36,9 +36,9 @@
         "opponentCardId": opponent.id,
         gameId: game.id,
       })' 
-    v-if="hero.id && opponent.id"
+    v-if="hero && opponent"
     >Fight!</button>
-    <hero />
+    <hero id="the-hero" />
     <div class="hero">
         <h1>{{game.players[0].name}}</h1>
         <div class="hero-hand">
@@ -66,9 +66,6 @@ import Hero from "@/components/Hero";
 import Opponent from "@/components/Opponent";
 export default {
   name: "Game",
-  data() {
-    return {};
-  },
   computed: {
     game() {
       return this.$store.state.game;
@@ -93,7 +90,14 @@ export default {
       this.$store.dispatch("setOpponent", card);
     },
     fight(payload) {
-      this.$store.dispatch("fight", payload);
+      document.getElementById('the-hero').classList.add('hero-rush')
+      document.getElementById('the-opp').classList.add('opp-rush')
+      let putFight = setTimeout(() => this.$store.dispatch("fight", payload), 1000)
+      let wait = setTimeout(() => {document.getElementById('the-hero').classList.remove('hero-rush')}, 1000)    
+      let waitAgain = setTimeout(() => {document.getElementById('the-opp').classList.remove('opp-rush')}, 1000)    
+    },
+    putFight(payload){
+      
     },
     quit(gameId) {
       this.$store.dispatch("quit", gameId);
@@ -107,6 +111,10 @@ export default {
 </script>
 
 <style scoped>
+div button {
+  position: absolute;
+}
+
 .opponent-hand {
   display: flex;
   flex-flow: row wrap;
@@ -164,14 +172,14 @@ export default {
 }
 .defense {
   position: absolute;
-  left: 3rem;
+  left: 1.2rem;
   top: 1rem;
   z-index: 2;
   visibility: hidden;
 }
 .shield {
   position: absolute;
-  left: 1.8rem;
+  left: 0rem;
   top: 1rem;
   color: gold;
   z-index: 1;
@@ -187,26 +195,31 @@ export default {
 .swords {
   position: absolute;
   right: 0rem;
-  top: .5rem;
+  top: 0.5rem;
   z-index: 1;
   visibility: hidden;
 }
 .health {
   position: absolute;
-  bottom: .7rem;
+  bottom: -0.4rem;
   z-index: 2;
   color: white;
   visibility: hidden;
 }
 .heart {
   position: absolute;
-  bottom: 1rem;
+  bottom: 0rem;
   z-index: 1;
   color: darkred;
   visibility: hidden;
 }
-.opp-card:hover .attack, .opp-card:hover .defense, .opp-card:hover .health, .opp-card:hover .shield, .opp-card:hover .swords, .opp-card:hover .heart {
-  animation: text-grow .5s forwards;
+.opp-card:hover .attack,
+.opp-card:hover .defense,
+.opp-card:hover .health,
+.opp-card:hover .shield,
+.opp-card:hover .swords,
+.opp-card:hover .heart {
+  animation: text-grow 0.5s forwards;
   visibility: visible;
 }
 .opponent h1 {
@@ -214,6 +227,12 @@ export default {
   text-align: center;
   width: 100vw;
   max-width: 99%;
+}
+.fight {
+  position: absolute;
+  top: 48vh;
+  width: 10vw;
+  margin: 0 45vw;
 }
 .hero h1 {
   position: absolute;
@@ -231,7 +250,7 @@ export default {
   position: absolute;
   bottom: 0vh;
   width: 100vw;
-  max-width: 99.5%;
+  max-width: 99%;
   z-index: 1;
 }
 .hero-card {
@@ -259,13 +278,18 @@ export default {
   }
 }
 .hero-card img {
-  height:85%;
+  height: 85%;
   width: 95%;
   bottom: 1%;
   position: absolute;
 }
-.hero-card:hover .attack, .hero-card:hover .defense, .hero-card:hover .health, .hero-card:hover .shield, .hero-card:hover .swords, .hero-card:hover .heart {
-  animation: text-grow .5s forwards;
+.hero-card:hover .attack,
+.hero-card:hover .defense,
+.hero-card:hover .health,
+.hero-card:hover .shield,
+.hero-card:hover .swords,
+.hero-card:hover .heart {
+  animation: text-grow 0.5s forwards;
   visibility: visible;
 }
 @keyframes text-grow {
@@ -274,6 +298,28 @@ export default {
   }
   to {
     font-size: 5rem;
+  }
+}
+.hero-rush {
+  animation: hero-rush 1s ease-in;
+}
+@keyframes hero-rush {
+  from {
+    left: 1rem;
+  }
+ 50% {
+    left: 50vw;
+  }
+}
+.opp-rush {
+  animation: opp-rush 1s ease-in;
+}
+@keyframes opp-rush {
+  from {
+    right: 1rem;
+  }
+  50% {
+    right: 50vw;
   }
 }
 </style>
