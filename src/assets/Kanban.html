@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<!-- saved from url=(0024)http://localhost:8080/#/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="http://localhost:8080/favicon.ico">
+  <link rel="stylesheet" href="./Kanban_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="./Kanban_files/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+  <title>Kanban</title>
+<link href="./Kanban_files/app.js.download" rel="preload" as="script"><style type="text/css">
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  overflow-x: hidden;
+}
+#nav {
+  padding: 30px;
+}
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+button {
+  cursor: pointer;
+}
+:root {
+  --fresh: #4abdac;
+  --vermillion: #fc4a1a;
+  --sunshine: #f7b733;
+  --clean: #dfdce3;
+}
+body {
+  background-color: var(--fresh)
+}
+</style><style type="text/css">
+:root {
+  --fresh: #4abdac;
+  --vermillion: #fc4a1a;
+  --sunshine: #f7b733;
+  --clean: #dfdce3;
+}
+.navbar[data-v-41458b80] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 10vh;
+  opacity: .9;
+  background-color: rgba(0, 0, 0, 0.253);
+}
+img[data-v-41458b80] {
+  height: 10vh;
+  width: auto;
+}
+.board-details[data-v-41458b80] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: wrap row;
+          flex-flow: wrap row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+h3[data-v-41458b80], h4[data-v-41458b80] {
+  color: var(--clean);
+}
+.user-actions[data-v-41458b80] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: wrap row;
+          flex-flow: wrap row;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+h5[data-v-41458b80] {
+  color: #f7b733;
+  cursor: pointer;
+  margin: 5px 10px;
+  font-size: 2rem;
+}
+h5[data-v-41458b80]:hover {
+  color:#e4a528;
+}
+.settings[data-v-41458b80] {
+  position: absolute;
+  top: 8vh;
+  right: 5vw;
+  z-index: 2;
+}
+</style><style type="text/css">
+.boards {
+  background-color: #f8f9f9;
+}
+.boards-body {
+  margin-top: 10vh;
+  padding-top: 2vh;
+  padding-left: 3vw;
+  height: 85vh;
+  background-color: #f8f9f9;
+  z-index: 0;
+}
+.the-boards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: wrap;
+      flex-flow: wrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+.board-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: wrap row;
+          flex-flow: wrap row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 15vh;
+  width: 30vh;
+  margin: 2vh 2vw;
+  border-radius: 2%;
+  -webkit-box-shadow: 1px 1px 2px #e7e7e7;
+          box-shadow: 1px 1px 2px #e7e7e7;
+  border-radius: 4px;
+  z-index: 0;
+}
+#add-card {
+  background-color: #697c82;
+  color: #f8f9f9;
+}
+#add-card i {
+  font-size: 2rem;
+  color: var(--sunshine);
+}
+#add-card p {
+  font-size: 1.3rem;
+  margin: 3% 0 0 5%;
+}
+#add-card button {
+  height: 4.5vh;
+  border-radius: 3%;
+}
+.card a {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #3b3b3b;
+  margin: 3% 0 0 5%;
+  width: 100%;
+}
+.card a:hover {
+  text-decoration: none;
+  color: #838282;
+}
+.card i {
+  font-size: 2rem;
+  cursor: pointer;
+  margin: 3% 3% 0 0;
+}
+.card i:hover {
+  color: var(--vermillion);
+}
+.addBoard h2 {
+  cursor: pointer;
+}
+input, ::-webkit-input-placeholder {
+  background-color: transparent;
+  color: #f8f9f9;
+  width: 29.5vh;
+}
+input, :-ms-input-placeholder {
+  background-color: transparent;
+  color: #f8f9f9;
+  width: 29.5vh;
+}
+input, ::-ms-input-placeholder {
+  background-color: transparent;
+  color: #f8f9f9;
+  width: 29.5vh;
+}
+input, ::placeholder {
+  background-color: transparent;
+  color: #f8f9f9;
+  width: 29.5vh;
+}
+</style><style type="text/css">
+.task {
+  background-color: #e7d5be;
+}
+.comments {
+  background-color: #f4f0f0;
+}
+p {
+  cursor: pointer;
+}
+</style><style type="text/css">
+:root {
+  --fresh: #4abdac;
+  --vermillion: #fc4a1a;
+  --sunshine: #f7b733;
+  --clean: #dfdce3;
+}
+.card[data-v-264bddce] {
+  color: black;
+  background-color: var(--clean);
+  width: 19vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  height: 80vh;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  /* background: rgba(0, 0, 0, 0.199); */
+  -webkit-box-shadow: 1px 1px 2px #e7e7e7;
+          box-shadow: 1px 1px 2px #e7e7e7;
+  border-radius: 4px;
+  margin: 0 0.1%;
+}
+</style><style type="text/css">
+.board-body[data-v-188e5bc8] {
+  margin-top: 10vh;
+  height: 90vh;
+}
+.listholder[data-v-188e5bc8] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: wrap row;
+          flex-flow: wrap row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+input[data-v-188e5bc8], .spacer[data-v-188e5bc8] {
+  height: 5vh;
+}
+</style><style type="text/css">.fade-enter-active, .fade-leave-active {
+    -webkit-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
+</style><style type="text/css">/* workaround for https://github.com/bootstrap-vue/bootstrap-vue/issues/1560 */
+/* source: _input-group.scss */
+
+.input-group > .input-group-prepend > .b-dropdown > .btn,
+.input-group > .input-group-append:not(:last-child) > .b-dropdown > .btn,
+.input-group > .input-group-append:last-child > .b-dropdown:not(:last-child):not(.dropdown-toggle) > .btn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group > .input-group-append > .b-dropdown > .btn,
+.input-group > .input-group-prepend:not(:first-child) > .b-dropdown > .btn,
+.input-group > .input-group-prepend:first-child > .b-dropdown:not(:first-child) > .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+</style><style type="text/css">/* Special styling for type=range and type=color input */
+input.form-control[type="range"],
+input.form-control[type="color"] {
+    height: 2.25rem;
+}
+input.form-control.form-control-sm[type="range"],
+input.form-control.form-control-sm[type="color"] {
+    height: 1.9375rem;
+}
+input.form-control.form-control-lg[type="range"],
+input.form-control.form-control-lg[type="color"] {
+    height: 3rem;
+}
+
+/* Less padding on type=color */
+input.form-control[type="color"] {
+    padding: 0.25rem 0.25rem;
+}
+input.form-control.form-control-sm[type="color"] {
+    padding: 0.125rem 0.125rem;
+}
+</style><style type="text/css">/* Add support for fixed layout table */
+table.b-table.b-table-fixed {
+    table-layout: fixed;
+}
+
+/* Busy table styling */
+table.b-table[aria-busy='false'] {
+    opacity: 1;
+}
+table.b-table[aria-busy='true'] {
+    opacity: 0.6;
+}
+
+/* Sort styling */
+table.b-table > thead > tr > th,
+table.b-table > tfoot > tr > th {
+    position: relative;
+}
+table.b-table > thead > tr > th.sorting,
+table.b-table > tfoot > tr > th.sorting {
+    padding-right: 1.5em;
+    cursor: pointer;
+}
+table.b-table > thead > tr > th.sorting::before,
+table.b-table > thead > tr > th.sorting::after,
+table.b-table > tfoot > tr > th.sorting::before,
+table.b-table > tfoot > tr > th.sorting::after {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    opacity: 0.4;
+    padding-bottom: inherit;
+    font-size: inherit;
+    line-height: 180%;
+}
+table.b-table > thead > tr > th.sorting::before,
+table.b-table > tfoot > tr > th.sorting::before {
+    right: 0.75em;
+    content: '\2191';
+}
+table.b-table > thead > tr > th.sorting::after,
+table.b-table > tfoot > tr > th.sorting::after {
+    right: 0.25em;
+    content: '\2193';
+}
+table.b-table > thead > tr > th.sorting_asc::after,
+table.b-table > thead > tr > th.sorting_desc::before,
+table.b-table > tfoot > tr > th.sorting_asc::after,
+table.b-table > tfoot > tr > th.sorting_desc::before {
+    opacity: 1;
+}
+
+/* Stacked table layout */
+/* Derived from http://blog.adrianroselli.com/2017/11/a-responsive-accessible-table.html */
+/* Always stacked */
+table.b-table.b-table-stacked {
+    width: 100%;
+}
+table.b-table.b-table-stacked,
+table.b-table.b-table-stacked > tbody,
+table.b-table.b-table-stacked > tbody > tr,
+table.b-table.b-table-stacked > tbody > tr > td,
+table.b-table.b-table-stacked > tbody > tr > th,
+table.b-table.b-table-stacked > caption {
+    display: block;
+}
+
+/* Hide stuff we can't deal with, or shouldn't show */
+table.b-table.b-table-stacked > thead,
+table.b-table.b-table-stacked > tfoot,
+table.b-table.b-table-stacked > tbody > tr.b-table-top-row,
+table.b-table.b-table-stacked > tbody > tr.b-table-bottom-row {
+    display: none;
+}
+
+/* inter-row top border */
+table.b-table.b-table-stacked > tbody > tr > :first-child {
+    border-top-width: 0.4rem;
+}
+
+/* convert TD/TH contents to "cells". Caveat: child elements become cells! */
+table.b-table.b-table-stacked > tbody > tr > [data-label] {
+    display: grid;
+    grid-template-columns: 40% auto;
+    grid-gap: 0.25rem 1rem;
+}
+
+/* generate row cell "heading" */
+table.b-table.b-table-stacked > tbody > tr > [data-label]::before {
+    content: attr(data-label);
+    display: inline;
+    text-align: right;
+    overflow-wrap: break-word;
+    font-weight: bold;
+    font-style: normal;
+}
+
+@media all and (max-width: 575.99px) {
+    /* Under SM */
+    table.b-table.b-table-stacked-sm {
+        width: 100%;
+    }
+    table.b-table.b-table-stacked-sm,
+    table.b-table.b-table-stacked-sm > tbody,
+    table.b-table.b-table-stacked-sm > tbody > tr,
+    table.b-table.b-table-stacked-sm > tbody > tr > td,
+    table.b-table.b-table-stacked-sm > tbody > tr > th,
+    table.b-table.b-table-stacked-sm > caption {
+        display: block;
+    }
+    /* hide stuff we can't deal with, or shouldn't show */
+    table.b-table.b-table-stacked-sm > thead,
+    table.b-table.b-table-stacked-sm > tfoot,
+    table.b-table.b-table-stacked-sm > tbody > tr.b-table-top-row,
+    table.b-table.b-table-stacked-sm > tbody > tr.b-table-bottom-row {
+        display: none;
+    }
+    /* inter-row top border */
+    table.b-table.b-table-stacked-sm > tbody > tr > :first-child {
+        border-top-width: 0.4rem;
+    }
+    /* convert TD/TH contents to "cells". Caveat: child elements become cells! */
+    table.b-table.b-table-stacked-sm > tbody > tr > [data-label] {
+        display: grid;
+        grid-template-columns: 40% auto;
+        grid-gap: 0.25rem 1rem;
+    }
+    /* generate row cell "heading" */
+    table.b-table.b-table-stacked-sm > tbody > tr > [data-label]::before {
+        content: attr(data-label);
+        display: inline;
+        text-align: right;
+        overflow-wrap: break-word;
+        font-weight: bold;
+        font-style: normal;
+    }
+}
+
+@media all and (max-width: 767.99px) {
+    /* under MD  */
+    table.b-table.b-table-stacked-md {
+        width: 100%;
+    }
+    table.b-table.b-table-stacked-md,
+    table.b-table.b-table-stacked-md > tbody,
+    table.b-table.b-table-stacked-md > tbody > tr,
+    table.b-table.b-table-stacked-md > tbody > tr > td,
+    table.b-table.b-table-stacked-md > tbody > tr > th,
+    table.b-table.b-table-stacked-md > caption {
+        display: block;
+    }
+    /* hide stuff we can't deal with, or shouldn't show */
+    table.b-table.b-table-stacked-md > thead,
+    table.b-table.b-table-stacked-md > tfoot,
+    table.b-table.b-table-stacked-md > tbody > tr.b-table-top-row,
+    table.b-table.b-table-stacked-md > tbody > tr.b-table-bottom-row {
+        display: none;
+    }
+    /* inter-row top border */
+    table.b-table.b-table-stacked-md > tbody > tr > :first-child {
+        border-top-width: 0.4rem;
+    }
+    /* convert TD/TH contents to "cells". Caveat: child elements become cells! */
+    table.b-table.b-table-stacked-md > tbody > tr > [data-label] {
+        display: grid;
+        grid-template-columns: 40% auto;
+        grid-gap: 0.25rem 1rem;
+    }
+    /* generate row cell "heading" */
+    table.b-table.b-table-stacked-md > tbody > tr > [data-label]::before {
+        content: attr(data-label);
+        display: inline;
+        text-align: right;
+        overflow-wrap: break-word;
+        font-weight: bold;
+        font-style: normal;
+    }
+}
+
+@media all and (max-width: 991.99px) {
+    /* under LG  */
+    table.b-table.b-table-stacked-lg {
+        width: 100%;
+    }
+    table.b-table.b-table-stacked-lg,
+    table.b-table.b-table-stacked-lg > tbody,
+    table.b-table.b-table-stacked-lg > tbody > tr,
+    table.b-table.b-table-stacked-lg > tbody > tr > td,
+    table.b-table.b-table-stacked-lg > tbody > tr > th,
+    table.b-table.b-table-stacked-lg > caption {
+        display: block;
+    }
+    /* hide stuff we can't deal with, or shouldn't show */
+    table.b-table.b-table-stacked-lg > thead,
+    table.b-table.b-table-stacked-lg > tfoot,
+    table.b-table.b-table-stacked-lg > tbody > tr.b-table-top-row,
+    table.b-table.b-table-stacked-lg > tbody > tr.b-table-bottom-row {
+        display: none;
+    }
+    /* inter-row top border */
+    table.b-table.b-table-stacked-lg > tbody > tr > :first-child {
+        border-top-width: 0.4rem;
+    }
+    /* convert TD/TH contents to "cells". Caveat: child elements become cells! */
+    table.b-table.b-table-stacked-lg > tbody > tr > [data-label] {
+        display: grid;
+        grid-template-columns: 40% auto;
+        grid-gap: 0.25rem 1rem;
+    }
+    /* generate row cell "heading" */
+    table.b-table.b-table-stacked-lg > tbody > tr > [data-label]::before {
+        content: attr(data-label);
+        display: inline;
+        text-align: right;
+        overflow-wrap: break-word;
+        font-weight: bold;
+        font-style: normal;
+    }
+}
+
+@media all and (max-width: 1199.99px) {
+    /* under XL  */
+    table.b-table.b-table-stacked-xl {
+        width: 100%;
+    }
+    table.b-table.b-table-stacked-xl,
+    table.b-table.b-table-stacked-xl > tbody,
+    table.b-table.b-table-stacked-xl > tbody > tr,
+    table.b-table.b-table-stacked-xl > tbody > tr > td,
+    table.b-table.b-table-stacked-xl > tbody > tr > th,
+    table.b-table.b-table-stacked-xl > caption {
+        display: block;
+    }
+    /* hide stuff we can't deal with, or shouldn't show */
+    table.b-table.b-table-stacked-xl > thead,
+    table.b-table.b-table-stacked-xl > tfoot,
+    table.b-table.b-table-stacked-xl > tbody > tr.b-table-top-row,
+    table.b-table.b-table-stacked-xl > tbody > tr.b-table-bottom-row {
+        display: none;
+    }
+    /* inter-row top border */
+    table.b-table.b-table-stacked-xl > tbody > tr > :first-child {
+        border-top-width: 0.4rem;
+    }
+    /* convert TD/TH contents to "cells". Caveat: child elements become cells! */
+    table.b-table.b-table-stacked-xl > tbody > tr > [data-label] {
+        display: grid;
+        grid-template-columns: 40% auto;
+        grid-gap: 0.25rem 1rem;
+    }
+    /* generate row cell "heading" */
+    table.b-table.b-table-stacked-xl > tbody > tr > [data-label]::before {
+        content: attr(data-label);
+        display: inline;
+        text-align: right;
+        overflow-wrap: break-word;
+        font-weight: bold;
+        font-style: normal;
+    }
+}
+
+/* Details row styling */
+table.b-table > tbody > tr.b-table-details > td {
+    border-top: none;
+}
+</style><script charset="utf-8" src="./Kanban_files/app.bdac3429fcacebad12ae.hot-update.js.download"></script><script charset="utf-8" src="./Kanban_files/app.665493b9297c6927cdc7.hot-update.js.download"></script><script charset="utf-8" src="./Kanban_files/app.384890cfe6aa292cdcbc.hot-update.js.download"></script></head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but kanban doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"><div class="boards container-fluid"><div data-v-41458b80="" class="navbar"><a data-v-41458b80="" href="http://localhost:8080/#/" class="router-link-exact-active router-link-active"><img data-v-41458b80="" src="./Kanban_files/trillo.39453f45.png" alt=""></a><!----><div data-v-41458b80="" class="user-actions"><h5 data-v-41458b80=""><i data-v-41458b80="" class="fas fa-user-circle"></i></h5><div data-v-41458b80="" class="settings card"><p data-v-41458b80="">this <br data-v-41458b80=""> is <br data-v-41458b80=""> a <br data-v-41458b80=""> test</p></div><button data-v-41458b80="" class="btn-secondary">Sign Out</button></div></div><div class="boards-body"><div class="the-boards"><div class="card board-card"><a href="http://localhost:8080/#/board/5b8eebffeb7f17808cb2d79c" class="r-link">first board</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b8efbad61367b191b964d89" class="r-link">second board</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b91af0f90ae7b13c7bcd8c6" class="r-link">Kanban Board</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b9315110a1f97761056e057" class="r-link">board</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b948cec4f5b071d7cbaffe4" class="r-link">classroom lists</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b95aebba2eba92efc44c281" class="r-link">b</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b95aecaa2eba92efc44c282" class="r-link">b</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b95aecea2eba92efc44c283" class="r-link">b</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b95aed1a2eba92efc44c284" class="r-link">b</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b95aed5a2eba92efc44c285" class="r-link">b</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b95aed8a2eba92efc44c286" class="r-link">b</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b95aedca2eba92efc44c287" class="r-link">b</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b95aedea2eba92efc44c288" class="r-link">b</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b95aee4a2eba92efc44c289" class="r-link">bb</a><i class="fas fa-trash-alt"></i></div><div class="card board-card"><a href="http://localhost:8080/#/board/5b95aee7a2eba92efc44c28a" class="r-link">b</a><i class="fas fa-trash-alt"></i></div><div class="addBoard"><div id="add-card" class="board-card card"><p>add a board</p><i class="fas fa-plus-circle"></i></div></div></div></div></div></div>
+  <!-- built files will be auto injected -->
+<script type="text/javascript" src="./Kanban_files/app.js.download"></script>
+
+</body></html>
